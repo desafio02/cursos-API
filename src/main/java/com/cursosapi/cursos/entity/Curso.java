@@ -28,7 +28,7 @@ public class Curso {
     @Column(name = "area_conhecimento")
     private AreaConhecimento areaConhecimento;
 
-    private boolean ativo;
+    private boolean ativo = true;
 
 
     public enum AreaConhecimento {
