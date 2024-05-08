@@ -6,6 +6,9 @@ import com.cursosapi.cursos.web.dto.CursoCreateDto;
 import com.cursosapi.cursos.web.dto.CursoResponseDto;
 import com.cursosapi.cursos.web.dto.mapper.CursoMapper;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -27,6 +30,13 @@ public class CursoController {
     private final CursoService cursoService;
 
     @PostMapping
+    @Operation(summary = "Cadastrar um novo curso")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Curso cadastrado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida"),
+            @ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+    })
     public ResponseEntity<CursoResponseDto> cadastrar(@RequestBody CursoCreateDto dto){
         Curso curso = cursoService.cadastrar(CursoMapper.toCurso(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(CursoMapper.toDto(curso));
