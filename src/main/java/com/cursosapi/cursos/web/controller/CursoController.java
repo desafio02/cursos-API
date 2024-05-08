@@ -8,14 +8,20 @@ import com.cursosapi.cursos.web.dto.mapper.CursoMapper;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/curso")
+@RequestMapping("api/v1/cursos")
 public class CursoController {
 
     private final CursoService cursoService;
@@ -31,5 +37,15 @@ public class CursoController {
                                                   @RequestBody String novoNomeProfessor) {
         Curso cursoAtualizado = cursoService.alterarProfessor(id, novoNomeProfessor);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(CursoMapper.toDto(cursoAtualizado));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CursoResponseDto>> getTodosOsCursos() {
+        List<Curso> cursos = cursoService.buscarTodos();
+        List<CursoResponseDto> cursosDto = new ArrayList<>();
+        for (Curso c : cursos) {
+            cursosDto.add(CursoMapper.toDto(c));
+        }
+        return ResponseEntity.ok(cursosDto);
     }
 }

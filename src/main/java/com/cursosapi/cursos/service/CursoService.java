@@ -4,6 +4,9 @@ import com.cursosapi.cursos.exception.ExcecaoNomeCursoJaExistente;
 import com.cursosapi.cursos.exception.Excecao_ID_Invalido;
 import com.cursosapi.cursos.repository.CursoRepository;
 import com.cursosapi.cursos.entity.Curso;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,5 +30,9 @@ public class CursoService {
                 .orElseThrow(() -> new Excecao_ID_Invalido(String.format("Curso com id não existente")));
         curso.setProfessor(novoNome);
         return cursoRepository.save(curso);
+    }
+
+    public List<Curso> buscarTodos() {
+        return cursoRepository.findAll();
     }
 }
