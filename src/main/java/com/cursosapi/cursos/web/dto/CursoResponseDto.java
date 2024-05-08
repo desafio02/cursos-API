@@ -1,7 +1,6 @@
 package com.cursosapi.cursos.web.dto;
 
 import com.cursosapi.cursos.entity.Curso;
-import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
