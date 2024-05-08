@@ -1,4 +1,4 @@
-package com.cursosapi.cursos.web;
+package com.cursosapi.cursos.web.controller;
 
 import com.cursosapi.cursos.service.CursoService;
 import com.cursosapi.cursos.entity.Curso;
