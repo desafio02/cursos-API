@@ -5,19 +5,20 @@ import com.cursosapi.cursos.entity.Curso;
 import com.cursosapi.cursos.web.dto.CursoCreateDto;
 import com.cursosapi.cursos.web.dto.CursoResponseDto;
 import com.cursosapi.cursos.web.dto.mapper.CursoMapper;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/curso")
 public class CursoController {
 
     private final CursoService cursoService;
-
-    public CursoController(CursoService cursoService) {
-        this.cursoService = cursoService;
-    }
 
     @PostMapping
     public ResponseEntity<CursoResponseDto> cadastrar(@RequestBody CursoCreateDto dto){
