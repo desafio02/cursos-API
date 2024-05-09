@@ -6,6 +6,7 @@ import com.cursosapi.cursos.repository.CursoRepository;
 import com.cursosapi.cursos.entity.Curso;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,10 @@ public class CursoService {
 
     public List<Curso> buscarTodos() {
         return cursoRepository.findAll();
+    }
+
+    public Curso buscarPorNome(String nome) {
+        return cursoRepository.findByNome(nome)
+                .orElseThrow(() -> new RuntimeException("Curso não encontrado"));
     }
 }

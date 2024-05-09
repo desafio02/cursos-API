@@ -81,27 +81,21 @@ public class CursoController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(CursoMapper.toDto(cursoAtualizado));
     }
 
-
-
-    @GetMapping
-    @Operation(summary = "Buscar todos os cursos",
-            description = "Endpoint para buscar todos os cursos cadastrados na base de dados.")
+    @GetMapping("/{nome}")
+    @Operation(summary = "Buscar curso por nome",
+            description = "Endpoint para buscar um curso pelo nome.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Cursos encontrados com sucesso",
+            @ApiResponse(responseCode = "200", description = "Curso encontrado com sucesso",
                     content = @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = CursoResponseDto.class)))),
-            @ApiResponse(responseCode = "404", description = "Nenhum curso encontrado",
+                            schema = @Schema(implementation = CursoResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Curso não encontrado",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = MensagemErro.class))),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
                     content = @Content(mediaType = "application/json"))
     })
-    public ResponseEntity<List<CursoResponseDto>> getTodosOsCursos() {
-        List<Curso> cursos = cursoService.buscarTodos();
-        List<CursoResponseDto> cursosDto = new ArrayList<>();
-        for (Curso c : cursos) {
-            cursosDto.add(CursoMapper.toDto(c));
-        }
-        return ResponseEntity.ok(cursosDto);
+    public ResponseEntity<CursoResponseDto> buscarCursoPorNome(@PathVariable String nome) {
+        Curso curso = cursoService.buscarPorNome(nome);
+        return ResponseEntity.ok(CursoMapper.toDto(curso));
     }
 }
