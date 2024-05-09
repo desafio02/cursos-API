@@ -6,7 +6,11 @@ import com.cursosapi.cursos.web.dto.CursoCreateDto;
 import com.cursosapi.cursos.web.dto.CursoResponseDto;
 import com.cursosapi.cursos.web.dto.mapper.CursoMapper;
 
+import com.cursosapi.cursos.web.exception.MensagemErro;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -30,24 +34,38 @@ public class CursoController {
     private final CursoService cursoService;
 
     @PostMapping
-    @Operation(summary = "Cadastrar um novo curso")
+    @Operation(summary = "Cadastrar um novo curso",
+            description = "Este endpoint permite cadastrar um novo curso na base de dados.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Curso cadastrado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Requisição inválida"),
-            @ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+            @ApiResponse(responseCode = "201", description = "Curso cadastrado com sucesso",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CursoResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "409", description = "Curso com nome já existente",
+                    content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = MensagemErro.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+                    content = @Content(mediaType = "application/json"))
     })
-    public ResponseEntity<CursoResponseDto> cadastrar(@RequestBody CursoCreateDto dto){
+    public ResponseEntity<CursoResponseDto> cadastrar(
+            @Parameter(description = "Dados do curso a ser cadastrado", required = true)@RequestBody CursoCreateDto dto){
         Curso curso = cursoService.cadastrar(CursoMapper.toCurso(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(CursoMapper.toDto(curso));
     }
 
+
     @PatchMapping("/{id}/alterar_professor")
-    public ResponseEntity<CursoResponseDto> alterarProfessor(@PathVariable Long id,
-                                                  @RequestBody String novoNomeProfessor) {
+    public ResponseEntity<CursoResponseDto> alterarProfessor(
+            @Parameter(description = "ID do curso a ser alterado", required = true)@PathVariable Long id,
+            @Parameter(description = "Novo nome do professor", required = true)@RequestBody String novoNomeProfessor) {
         Curso cursoAtualizado = cursoService.alterarProfessor(id, novoNomeProfessor);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(CursoMapper.toDto(cursoAtualizado));
     }
+
+
 
     @GetMapping
     public ResponseEntity<List<CursoResponseDto>> getTodosOsCursos() {
