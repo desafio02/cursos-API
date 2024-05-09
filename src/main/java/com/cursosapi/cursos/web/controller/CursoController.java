@@ -9,6 +9,7 @@ import com.cursosapi.cursos.web.dto.mapper.CursoMapper;
 import com.cursosapi.cursos.web.exception.MensagemErro;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -50,8 +51,7 @@ public class CursoController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = MensagemErro.class))),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = MensagemErro.class)))
+                    content = @Content(mediaType = "application/json"))
     })
     public ResponseEntity<CursoResponseDto> cadastrar(
             @Parameter(description = "Dados do curso a ser cadastrado", required = true)@RequestBody CursoCreateDto dto){
@@ -72,8 +72,7 @@ public class CursoController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = MensagemErro.class))),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = MensagemErro.class)))
+                    content = @Content(mediaType = "application/json"))
     })
     public ResponseEntity<CursoResponseDto> alterarProfessor(
             @Parameter(description = "ID do curso a ser alterado", required = true)@PathVariable Long id,
@@ -85,6 +84,18 @@ public class CursoController {
 
 
     @GetMapping
+    @Operation(summary = "Buscar todos os cursos",
+            description = "Endpoint para buscar todos os cursos cadastrados na base de dados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cursos encontrados com sucesso",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = CursoResponseDto.class)))),
+            @ApiResponse(responseCode = "404", description = "Nenhum curso encontrado",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MensagemErro.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+                    content = @Content(mediaType = "application/json"))
+    })
     public ResponseEntity<List<CursoResponseDto>> getTodosOsCursos() {
         List<Curso> cursos = cursoService.buscarTodos();
         List<CursoResponseDto> cursosDto = new ArrayList<>();
