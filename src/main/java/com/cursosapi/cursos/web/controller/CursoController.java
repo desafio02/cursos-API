@@ -41,14 +41,17 @@ public class CursoController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CursoResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Requisição inválida",
-                    content = @Content(mediaType = "application/json")),
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MensagemErro.class))),
             @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
-                    content = @Content(mediaType = "application/json")),
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MensagemErro.class))),
             @ApiResponse(responseCode = "409", description = "Curso com nome já existente",
                     content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = MensagemErro.class))),
+                            schema = @Schema(implementation = MensagemErro.class))),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
-                    content = @Content(mediaType = "application/json"))
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MensagemErro.class)))
     })
     public ResponseEntity<CursoResponseDto> cadastrar(
             @Parameter(description = "Dados do curso a ser cadastrado", required = true)@RequestBody CursoCreateDto dto){
@@ -58,6 +61,20 @@ public class CursoController {
 
 
     @PatchMapping("/{id}/alterar_professor")
+    @Operation(summary = "Alterar o professor de um curso", description = "Endpoint para alterar o professor de um curso pelo ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Professor alterado com sucesso",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Curso não encontrado",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MensagemErro.class))),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MensagemErro.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MensagemErro.class)))
+    })
     public ResponseEntity<CursoResponseDto> alterarProfessor(
             @Parameter(description = "ID do curso a ser alterado", required = true)@PathVariable Long id,
             @Parameter(description = "Novo nome do professor", required = true)@RequestBody String novoNomeProfessor) {
