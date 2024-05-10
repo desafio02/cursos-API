@@ -1,6 +1,9 @@
 package com.cursosapi.cursos.service;
 
-import com.cursosapi.cursos.exception.*;
+import com.cursosapi.cursos.exception.ExcecaoAreaConhecimentoInvalida;
+import com.cursosapi.cursos.exception.ExcecaoBuscarComNomeInvalido;
+import com.cursosapi.cursos.exception.ExcecaoNomeCursoJaExistente;
+import com.cursosapi.cursos.exception.Excecao_ID_Invalido;
 import com.cursosapi.cursos.repository.CursoRepository;
 import com.cursosapi.cursos.entity.Curso;
 
@@ -39,12 +42,12 @@ public class CursoService {
 
     public Curso buscarPorNome(String nome) {
         return cursoRepository.findByNome(nome)
-                .orElseThrow(() -> new ExcecaoBuscarComIDInvalido("Curso não encontrado"));
+                .orElseThrow(() -> new ExcecaoBuscarComNomeInvalido("Curso não encontrado"));
     }
 
     public Curso buscarPorId(Long id) {
         return cursoRepository.findById(id)
-                .orElseThrow(() -> new ExcecaoBuscarComIDInvalido("Curso não encontrado"));
+                .orElseThrow(() -> new Excecao_ID_Invalido("Curso não encontrado"));
     }
 
 }

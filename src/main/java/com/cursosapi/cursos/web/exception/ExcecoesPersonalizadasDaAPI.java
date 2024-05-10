@@ -55,15 +55,7 @@ public class ExcecoesPersonalizadasDaAPI extends ResponseEntityExceptionHandler 
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new MensagemErro(request, HttpStatus.NOT_FOUND, ex.getMessage()));
     }
-    @ExceptionHandler(ExcecaoBuscarComIDInvalido.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public final ResponseEntity<MensagemErro> handleExcecaoBuscarComIDInvalido(ExcecaoBuscarComIDInvalido ex, HttpServletRequest request) {
-        log.error("Erro na API", ex);
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(new MensagemErro(request, HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()));
-    }
+
 
 }
 
