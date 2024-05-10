@@ -98,4 +98,11 @@ public class CursoController {
         Curso curso = cursoService.buscarPorNome(nome);
         return ResponseEntity.ok(CursoMapper.toDto(curso));
     }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<CursoResponseDto> buscarCursoPorId(@PathVariable Long id) {
+        Curso curso = cursoService.buscarPorId(id);
+        return ResponseEntity.ok(CursoMapper.toDto(curso));
+    }
+
 }

@@ -41,4 +41,10 @@ public class CursoService {
         return cursoRepository.findByNome(nome)
                 .orElseThrow(() -> new RuntimeException("Curso não encontrado"));
     }
+
+    public Curso buscarPorId(Long id) {
+        return cursoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Curso não encontrado"));
+    }
+
 }
