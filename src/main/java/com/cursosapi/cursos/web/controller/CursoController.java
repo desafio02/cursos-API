@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CursoController {
 
     private final CursoService cursoService;
-
     @PostMapping
     @Operation(summary = "Cadastrar um novo curso",
             description = "Este endpoint permite cadastrar um novo curso na base de dados.")

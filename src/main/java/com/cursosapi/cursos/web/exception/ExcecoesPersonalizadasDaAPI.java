@@ -29,11 +29,22 @@ public class ExcecoesPersonalizadasDaAPI extends ResponseEntityExceptionHandler 
     @ExceptionHandler(Excecao_ID_Invalido.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public final ResponseEntity<MensagemErro> handleExcecao_ID_Invalido(Excecao_ID_Invalido ex, HttpServletRequest request) {
-        log.error("Api Error", ex);
+        log.error("Erro na api", ex);
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new MensagemErro(request, HttpStatus.NOT_FOUND, ex.getMessage()));
     }
+
+    @ExceptionHandler(ExcecaoAreaConhecimentoInvalida.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public final ResponseEntity<MensagemErro> handleExcecaoAreaConhecimentoInvalida(ExcecaoAreaConhecimentoInvalida ex, HttpServletRequest request) {
+        log.error("Erro na API", ex);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new MensagemErro(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
+    }
+
 }
 

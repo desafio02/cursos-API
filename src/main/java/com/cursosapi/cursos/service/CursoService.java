@@ -1,5 +1,6 @@
 package com.cursosapi.cursos.service;
 
+import com.cursosapi.cursos.exception.ExcecaoAreaConhecimentoInvalida;
 import com.cursosapi.cursos.exception.ExcecaoNomeCursoJaExistente;
 import com.cursosapi.cursos.exception.Excecao_ID_Invalido;
 import com.cursosapi.cursos.repository.CursoRepository;
@@ -20,10 +21,15 @@ public class CursoService {
 
     public Curso cadastrar(Curso curso) {
         if (cursoRepository.existsByNome(curso.getNome())) {
-            throw new ExcecaoNomeCursoJaExistente(String.format("Curso com nome já existente"));
+            throw new ExcecaoNomeCursoJaExistente("Curso com nome já existente");
+        }
+
+        if (!validarAreaConhecimento(curso.getAreaConhecimento())) {
+            throw new ExcecaoAreaConhecimentoInvalida("Área de conhecimento inválida");
         }
         return cursoRepository.save(curso);
     }
+
 
     public Curso alterarProfessor(Long idCurso, String novoNome) {
         Curso curso = cursoRepository.findById(idCurso)
@@ -34,5 +40,14 @@ public class CursoService {
 
     public List<Curso> buscarTodos() {
         return cursoRepository.findAll();
+    }
+
+    private boolean validarAreaConhecimento(Curso.AreaConhecimento areaConhecimento) {
+        for (Curso.AreaConhecimento enumValue : Curso.AreaConhecimento.values()) {
+            if (enumValue.equals(areaConhecimento)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
