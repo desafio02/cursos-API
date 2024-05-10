@@ -1,7 +1,7 @@
 package com.cursosapi.cursos.service;
 
 import com.cursosapi.cursos.exception.ExcecaoAreaConhecimentoInvalida;
-import com.cursosapi.cursos.exception.ExcecaoBuscarComIDInvalido;
+import com.cursosapi.cursos.exception.ExcecaoBuscarComNomeInvalido;
 import com.cursosapi.cursos.exception.ExcecaoNomeCursoJaExistente;
 import com.cursosapi.cursos.exception.Excecao_ID_Invalido;
 import com.cursosapi.cursos.repository.CursoRepository;
