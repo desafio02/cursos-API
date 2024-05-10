@@ -9,7 +9,6 @@ import com.cursosapi.cursos.web.dto.mapper.CursoMapper;
 import com.cursosapi.cursos.web.exception.MensagemErro;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -52,7 +51,7 @@ public class CursoController {
                     content = @Content(mediaType = "application/json"))
     })
     public ResponseEntity<CursoResponseDto> cadastrar(
-            @Parameter(description = "Dados do curso a ser cadastrado", required = true)@Valid @RequestBody  CursoCreateDto dto){
+            @Parameter(description = "Dados do curso a ser cadastrado", required = true) @Valid @RequestBody CursoCreateDto dto) {
         Curso curso = cursoService.cadastrar(CursoMapper.toCurso(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(CursoMapper.toDto(curso));
     }
@@ -73,8 +72,8 @@ public class CursoController {
                     content = @Content(mediaType = "application/json"))
     })
     public ResponseEntity<CursoResponseDto> alterarProfessor(
-            @Parameter(description = "ID do curso a ser alterado", required = true)@PathVariable Long id,
-            @Parameter(description = "Novo nome do professor", required = true)@RequestBody String novoNomeProfessor) {
+            @Parameter(description = "ID do curso a ser alterado", required = true) @PathVariable Long id,
+            @Parameter(description = "Novo nome do professor", required = true) @RequestBody String novoNomeProfessor) {
         Curso cursoAtualizado = cursoService.alterarProfessor(id, novoNomeProfessor);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(CursoMapper.toDto(cursoAtualizado));
     }
@@ -116,4 +115,28 @@ public class CursoController {
         Curso curso = cursoService.buscarPorId(id);
         return ResponseEntity.ok(CursoMapper.toDto(curso));
     }
+
+    @PatchMapping("/inativar/{id}")
+    @Operation(summary = "Inativar curso por ID",
+            description = "Endpoint para inativar um curso pelo ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Curso inativado com sucesso",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CursoResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "Solicitação inválida",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MensagemErro.class))),
+            @ApiResponse(responseCode = "404", description = "Curso não encontrado",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MensagemErro.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+                    content = @Content(mediaType = "application/json"))
+    })
+    public ResponseEntity<CursoResponseDto> inativarCursoPorId(
+            @Parameter(description = "ID do curso a ser inativado", required = true) @PathVariable Long id) {
+        Curso curso = cursoService.inativarPorId(id);
+        return ResponseEntity.ok(CursoMapper.toDto(curso));
+    }
+
+
 }

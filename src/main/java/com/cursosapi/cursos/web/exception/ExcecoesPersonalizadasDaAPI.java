@@ -1,8 +1,6 @@
 package com.cursosapi.cursos.web.exception;
 
 import com.cursosapi.cursos.exception.*;
-
-
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -55,7 +53,6 @@ public class ExcecoesPersonalizadasDaAPI extends ResponseEntityExceptionHandler 
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new MensagemErro(request, HttpStatus.NOT_FOUND, ex.getMessage()));
     }
-
 
 }
 

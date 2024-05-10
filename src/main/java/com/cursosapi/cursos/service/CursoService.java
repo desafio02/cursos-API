@@ -50,4 +50,11 @@ public class CursoService {
                 .orElseThrow(() -> new Excecao_ID_Invalido("Curso não encontrado"));
     }
 
+    public Curso inativarPorId(Long id) {
+        Curso curso = cursoRepository.findById(id)
+                .orElseThrow(() -> new Excecao_ID_Invalido(String.format("Curso com id não existente")));
+        curso.setAtivo(false);
+        return cursoRepository.save(curso);
+    }
+
 }
