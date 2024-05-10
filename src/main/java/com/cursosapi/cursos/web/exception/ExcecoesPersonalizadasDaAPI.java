@@ -35,5 +35,35 @@ public class ExcecoesPersonalizadasDaAPI extends ResponseEntityExceptionHandler 
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new MensagemErro(request, HttpStatus.NOT_FOUND, ex.getMessage()));
     }
+
+    @ExceptionHandler(ExcecaoAreaConhecimentoInvalida.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public final ResponseEntity<MensagemErro> handleExcecaoAreaConhecimentoInvalida(ExcecaoAreaConhecimentoInvalida ex, HttpServletRequest request) {
+        log.error("Erro na API", ex);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new MensagemErro(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
+    }
+
+    @ExceptionHandler(ExcecaoBuscarComNomeInvalido.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public final ResponseEntity<MensagemErro> handleExcecaoBuscarComNomeInvalido(ExcecaoBuscarComIDInvalido ex, HttpServletRequest request) {
+        log.error("Erro na API", ex);
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new MensagemErro(request, HttpStatus.NOT_FOUND, ex.getMessage()));
+    }
+    @ExceptionHandler(ExcecaoBuscarComIDInvalido.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public final ResponseEntity<MensagemErro> handleExcecaoBuscarComIDInvalido(ExcecaoBuscarComIDInvalido ex, HttpServletRequest request) {
+        log.error("Erro na API", ex);
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new MensagemErro(request, HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()));
+    }
+
 }
 
