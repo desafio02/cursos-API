@@ -14,16 +14,14 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -54,7 +52,7 @@ public class CursoController {
                     content = @Content(mediaType = "application/json"))
     })
     public ResponseEntity<CursoResponseDto> cadastrar(
-            @Parameter(description = "Dados do curso a ser cadastrado", required = true)@RequestBody CursoCreateDto dto){
+            @Parameter(description = "Dados do curso a ser cadastrado", required = true)@Valid @RequestBody  CursoCreateDto dto){
         Curso curso = cursoService.cadastrar(CursoMapper.toCurso(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(CursoMapper.toDto(curso));
     }
@@ -94,8 +92,28 @@ public class CursoController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
                     content = @Content(mediaType = "application/json"))
     })
-    public ResponseEntity<CursoResponseDto> buscarCursoPorNome(@PathVariable String nome) {
+    public ResponseEntity<CursoResponseDto> buscarCursoPorNome(
+            @Parameter(description = "Nome do curso a ser buscado", required = true) @PathVariable String nome) {
         Curso curso = cursoService.buscarPorNome(nome);
+        return ResponseEntity.ok(CursoMapper.toDto(curso));
+    }
+
+    @GetMapping("/id/{id}")
+    @Operation(summary = "Buscar curso por ID",
+            description = "Endpoint para buscar um curso pelo ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Curso encontrado com sucesso",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CursoResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Curso não encontrado",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MensagemErro.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+                    content = @Content(mediaType = "application/json"))
+    })
+    public ResponseEntity<CursoResponseDto> buscarCursoPorId(
+            @Parameter(description = "ID do curso a ser buscado", required = true) @PathVariable Long id) {
+        Curso curso = cursoService.buscarPorId(id);
         return ResponseEntity.ok(CursoMapper.toDto(curso));
     }
 }
