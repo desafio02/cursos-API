@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,7 @@ public class CursoController {
                     content = @Content(mediaType = "application/json"))
     })
     public ResponseEntity<CursoResponseDto> cadastrar(
-            @Parameter(description = "Dados do curso a ser cadastrado", required = true)@RequestBody CursoCreateDto dto){
+            @Parameter(description = "Dados do curso a ser cadastrado", required = true)@Valid @RequestBody  CursoCreateDto dto){
         Curso curso = cursoService.cadastrar(CursoMapper.toCurso(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(CursoMapper.toDto(curso));
     }
@@ -115,5 +116,4 @@ public class CursoController {
         Curso curso = cursoService.buscarPorId(id);
         return ResponseEntity.ok(CursoMapper.toDto(curso));
     }
-
 }

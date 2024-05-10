@@ -1,7 +1,7 @@
 package com.cursosapi.cursos.service;
 
 import com.cursosapi.cursos.exception.ExcecaoAreaConhecimentoInvalida;
-import com.cursosapi.cursos.exception.ExcecaoBuscarComNomeInvalido;
+import com.cursosapi.cursos.exception.ExcecaoBuscarComIDInvalido;
 import com.cursosapi.cursos.exception.ExcecaoNomeCursoJaExistente;
 import com.cursosapi.cursos.exception.Excecao_ID_Invalido;
 import com.cursosapi.cursos.repository.CursoRepository;
@@ -10,6 +10,7 @@ import com.cursosapi.cursos.entity.Curso;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Service
 public class CursoService {
@@ -29,7 +30,6 @@ public class CursoService {
         } catch (IllegalArgumentException e) {
             throw new ExcecaoAreaConhecimentoInvalida("Área de conhecimento inválida");
         }
-
         return cursoRepository.save(curso);
     }
 
