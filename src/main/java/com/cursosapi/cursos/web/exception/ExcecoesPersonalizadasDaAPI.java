@@ -48,7 +48,7 @@ public class ExcecoesPersonalizadasDaAPI extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler(ExcecaoBuscarComNomeInvalido.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public final ResponseEntity<MensagemErro> handleExcecaoBuscarComNomeInvalido(ExcecaoBuscarComIDInvalido ex, HttpServletRequest request) {
+    public final ResponseEntity<MensagemErro> handleExcecaoBuscarComNomeInvalido(ExcecaoBuscarComNomeInvalido ex, HttpServletRequest request) {
         log.error("Erro na API", ex);
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
