@@ -44,6 +44,7 @@ public class MensagemErro {
         adicionarErros(result);
     }
 
+
     private void adicionarErros(BindingResult result) {
         this.errors = new HashMap<>();
         for (FieldError fieldError : result.getFieldErrors()) {
