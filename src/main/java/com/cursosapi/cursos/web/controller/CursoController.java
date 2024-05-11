@@ -47,9 +47,7 @@ public class CursoController {
                             schema = @Schema(implementation = MensagemErro.class))),
             @ApiResponse(responseCode = "409", description = "Curso com nome já existente",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = MensagemErro.class))),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
-                    content = @Content(mediaType = "application/json"))
+                            schema = @Schema(implementation = MensagemErro.class)))
     })
     public ResponseEntity<CursoResponseDto> cadastrar(
             @Parameter(description = "Dados do curso a ser cadastrado", required = true) @Valid @RequestBody CursoCreateDto dto) {
@@ -68,9 +66,7 @@ public class CursoController {
                             schema = @Schema(implementation = MensagemErro.class))),
             @ApiResponse(responseCode = "400", description = "Requisição inválida",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = MensagemErro.class))),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
-                    content = @Content(mediaType = "application/json"))
+                            schema = @Schema(implementation = MensagemErro.class)))
     })
     public ResponseEntity<CursoResponseDto> alterarProfessor(
             @Parameter(description = "ID do curso a ser alterado", required = true) @PathVariable Long id,
@@ -88,9 +84,7 @@ public class CursoController {
                             schema = @Schema(implementation = CursoResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "Curso não encontrado",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = MensagemErro.class))),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
-                    content = @Content(mediaType = "application/json"))
+                            schema = @Schema(implementation = MensagemErro.class)))
     })
     public ResponseEntity<CursoResponseDto> buscarCursoPorNome(
             @Parameter(description = "Nome do curso a ser buscado", required = true) @PathVariable String nome) {
@@ -107,9 +101,7 @@ public class CursoController {
                             schema = @Schema(implementation = CursoResponseDto.class))),
             @ApiResponse(responseCode = "404", description = "Curso não encontrado",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = MensagemErro.class))),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
-                    content = @Content(mediaType = "application/json"))
+                            schema = @Schema(implementation = MensagemErro.class)))
     })
     public ResponseEntity<CursoResponseDto> buscarCursoPorId(
             @Parameter(description = "ID do curso a ser buscado", required = true) @PathVariable Long id) {
@@ -129,9 +121,7 @@ public class CursoController {
                             schema = @Schema(implementation = MensagemErro.class))),
             @ApiResponse(responseCode = "404", description = "Curso não encontrado",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = MensagemErro.class))),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
-                    content = @Content(mediaType = "application/json"))
+                            schema = @Schema(implementation = MensagemErro.class)))
     })
     public ResponseEntity<CursoResponseDto> inativarCursoPorId(
             @Parameter(description = "ID do curso a ser inativado", required = true) @PathVariable Long id) {
