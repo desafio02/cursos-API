@@ -28,8 +28,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/cursos")
 public class CursoController {
-
     private final CursoService cursoService;
+
+
 
     @PostMapping
     @Operation(summary = "Cadastrar um novo curso",
