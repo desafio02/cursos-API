@@ -10,7 +10,6 @@ import com.cursosapi.cursos.entity.Curso;
 
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Service
 public class CursoService {
@@ -32,6 +31,7 @@ public class CursoService {
         }
         return cursoRepository.save(curso);
     }
+
 
     public Curso alterarProfessor(Long idCurso, String novoNome) {
         Curso curso = cursoRepository.findById(idCurso)
