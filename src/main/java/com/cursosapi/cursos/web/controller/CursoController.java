@@ -59,7 +59,7 @@ public class CursoController {
     @PatchMapping("/{id}/alterar_professor")
     @Operation(summary = "Alterar o professor de um curso", description = "Endpoint para alterar o professor de um curso pelo ID.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "202", description = "Professor alterado com sucesso",
+            @ApiResponse(responseCode = "204", description = "Professor alterado com sucesso",
                     content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "404", description = "Curso não encontrado",
                     content = @Content(mediaType = "application/json",
@@ -72,7 +72,7 @@ public class CursoController {
             @Parameter(description = "ID do curso a ser alterado", required = true) @PathVariable Long id,
             @Parameter(description = "Novo nome do professor", required = true) @RequestBody String novoNomeProfessor) {
         Curso cursoAtualizado = cursoService.alterarProfessor(id, novoNomeProfessor);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(CursoMapper.toDto(cursoAtualizado));
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{nome}")
@@ -113,7 +113,7 @@ public class CursoController {
     @Operation(summary = "Inativar curso por ID",
             description = "Endpoint para inativar um curso pelo ID.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Curso inativado com sucesso",
+            @ApiResponse(responseCode = "204", description = "Curso inativado com sucesso",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CursoResponseDto.class))),
             @ApiResponse(responseCode = "400", description = "Solicitação inválida",
@@ -126,7 +126,7 @@ public class CursoController {
     public ResponseEntity<CursoResponseDto> inativarCursoPorId(
             @Parameter(description = "ID do curso a ser inativado", required = true) @PathVariable Long id) {
         Curso curso = cursoService.inativarPorId(id);
-        return ResponseEntity.ok(CursoMapper.toDto(curso));
+        return ResponseEntity.noContent().build();
     }
 
 
