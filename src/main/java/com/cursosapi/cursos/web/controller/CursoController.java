@@ -128,6 +128,4 @@ public class CursoController {
         Curso curso = cursoService.inativarPorId(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }

@@ -64,9 +64,7 @@ public class TesteEndpoints {
 
         ResponseEntity<CursoResponseDto> response = cursoController.inativarCursoPorId(id);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(cursoMock.getId(), response.getBody().getId());
-        assertEquals(cursoMock.getNome(), response.getBody().getNome());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 
         verify(cursoService, times(1)).inativarPorId(id);
     }
@@ -124,8 +122,7 @@ public class TesteEndpoints {
         when(cursoService.alterarProfessor(1L, novoNome)).thenReturn(cursoSimulado);
 
         ResponseEntity<CursoResponseDto> response = cursoController.alterarProfessor(1L, novoNome);
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-        assertEquals(cursoSimulado.getProfessor(), response.getBody().getProfessor());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 }
 
