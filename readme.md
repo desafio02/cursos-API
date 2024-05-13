@@ -96,6 +96,14 @@ Curso: nome, quantidade de horas, professor, área do conhecimento, ativo.
 - JDBC URL: jdbc:h2:file:./curso;
 - User Name: root;
 - Password: 1234;
+  
+### ENUM de Areas de conhecimento
+-PROGRAMACAO
+-DESIGN
+-CIENCIAS
+-MATEMATICA
+-HISTORIA
+-LETRAS
 
 ### Endpoints
 
