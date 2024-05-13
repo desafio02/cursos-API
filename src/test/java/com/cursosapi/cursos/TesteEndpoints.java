@@ -1,6 +1,7 @@
 package com.cursosapi.cursos;
 
 import com.cursosapi.cursos.entity.Curso;
+import com.cursosapi.cursos.repository.CursoRepository;
 import com.cursosapi.cursos.service.CursoService;
 import com.cursosapi.cursos.web.controller.CursoController;
 import com.cursosapi.cursos.web.dto.CursoCreateDto;
@@ -10,27 +11,22 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+public class TesteEndpoints {
 
-
-
-public class CursoControllerTest {
+    @Mock
+    private CursoRepository cursoRepository;
 
     @Mock
     private CursoService cursoService;
 
     @InjectMocks
     private CursoController cursoController;
-
-    @Autowired
-    private MockMvc mockMvc;
 
     @BeforeEach
     public void setUp() {
@@ -58,7 +54,7 @@ public class CursoControllerTest {
     }
 
     @Test
-    public void testInativarCursoPorId() {
+    public void testInativarCurso() {
         Long id = 1L;
         Curso cursoMock = new Curso();
         cursoMock.setId(id);
@@ -115,7 +111,6 @@ public class CursoControllerTest {
         assertEquals(cursoSimulado.getAreaConhecimento(), response.getBody().getAreaConhecimento());
     }
 
-
     @Test
     public void TestAlterarProfessor() {
         Curso cursoSimulado = new Curso();
@@ -125,15 +120,13 @@ public class CursoControllerTest {
         cursoSimulado.setAreaConhecimento(Curso.AreaConhecimento.PROGRAMACAO);
 
         String novoNome = "Professor de teste";
+
         when(cursoService.alterarProfessor(1L, novoNome)).thenReturn(cursoSimulado);
 
         ResponseEntity<CursoResponseDto> response = cursoController.alterarProfessor(1L, novoNome);
-
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
         assertEquals(cursoSimulado.getProfessor(), response.getBody().getProfessor());
     }
-
-
-
 }
+
 
