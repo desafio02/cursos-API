@@ -98,12 +98,12 @@ Curso: nome, quantidade de horas, professor, área do conhecimento, ativo.
 - Password: 1234;
   
 ### ENUM de Areas de conhecimento
--PROGRAMACAO
--DESIGN
--CIENCIAS
--MATEMATICA
--HISTORIA
--LETRAS
+     PROGRAMACAO,
+     DESIGN,
+     MATEMATICA,
+     CIENCIAS,
+     HISTORIA,
+     LETRAS;
 
 ### Endpoints
 
